@@ -116,6 +116,16 @@ int zmq::req_t::xsend (msg_t *msg_)
     return 0;
 }
 
+int zmq::req_t::xrollback ()
+{
+    if (reply_pipe)
+        reply_pipe->terminate (false);
+    reply_pipe = NULL;
+    receiving_reply = false;
+    message_begins = true;
+    return 0;
+}
+
 int zmq::req_t::xrecv (msg_t *msg_)
 {
     //  If request wasn't send, we can't wait for reply.

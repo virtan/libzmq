@@ -80,6 +80,7 @@ namespace zmq
         int term_endpoint (const char *addr_);
         int send (zmq::msg_t *msg_, int flags_);
         int recv (zmq::msg_t *msg_, int flags_);
+        int rollback ();
         int close ();
 
         //  These functions are used by the polling mechanism to determine
@@ -143,6 +144,7 @@ namespace zmq
         //  The default implementation assumes that send is not supported.
         virtual bool xhas_out ();
         virtual int xsend (zmq::msg_t *msg_);
+        virtual int xrollback ();
 
         //  The default implementation assumes that recv in not supported.
         virtual bool xhas_in ();

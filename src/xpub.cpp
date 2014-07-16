@@ -143,6 +143,13 @@ int zmq::xpub_t::xsend (msg_t *msg_)
     return 0;
 }
 
+int zmq::xpub_t::xrollback ()
+{
+    dist.unmatch ();
+    more = false;
+    return 0;
+}
+
 bool zmq::xpub_t::xhas_out ()
 {
     return dist.has_out ();

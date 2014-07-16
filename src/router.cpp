@@ -346,13 +346,13 @@ int zmq::router_t::xrecv (msg_t *msg_)
     return 0;
 }
 
-int zmq::router_t::rollback (void)
+int zmq::router_t::xrollback (void)
 {
     if (current_out) {
         current_out->rollback ();
         current_out = NULL;
-        more_out = false;
     }
+    more_out = false;
     return 0;
 }
 

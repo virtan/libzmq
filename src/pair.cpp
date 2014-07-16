@@ -90,6 +90,15 @@ int zmq::pair_t::xsend (msg_t *msg_)
     return 0;
 }
 
+int zmq::pair_t::xrollback ()
+{
+    if(!pipe) {
+        return 0;
+    }
+    pipe->rollback ();
+    return 0;
+}
+
 int zmq::pair_t::xrecv (msg_t *msg_)
 {
     //  Deallocate old content of the message.

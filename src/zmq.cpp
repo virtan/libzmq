@@ -398,6 +398,20 @@ int zmq_send_const (void *s_, const void *buf_, size_t len_, int flags_)
     return rc;
 }
 
+int zmq_rollback (void *s_)
+{
+    if (!s_ || !((zmq::socket_base_t*) s_)->check_tag ()) {
+        errno = ENOTSOCK;
+        return -1;
+    }
+
+    zmq::socket_base_t *s = (zmq::socket_base_t *) s_;
+    int rc = s->rollback();
+    if(unlikely (rc < 0))
+        return -1;
+    return rc;
+}
+
 
 // Send multiple messages.
 // TODO: this function has no man page

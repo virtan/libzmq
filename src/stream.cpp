@@ -164,6 +164,16 @@ int zmq::stream_t::xsend (msg_t *msg_)
     return 0;
 }
 
+int zmq::stream_t::xrollback ()
+{
+    more_out = false;
+    if (current_out) {
+        current_out->terminate (false);
+        current_out = NULL;
+    }
+    return 0;
+}
+
 int zmq::stream_t::xsetsockopt (int option_, const void *optval_,
     size_t optvallen_)
 {

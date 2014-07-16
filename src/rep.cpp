@@ -55,6 +55,12 @@ int zmq::rep_t::xsend (msg_t *msg_)
     return 0;
 }
 
+int zmq::rep_t::xrollback ()
+{
+    sending_reply = false;
+    return 0;
+}
+
 int zmq::rep_t::xrecv (msg_t *msg_)
 {
     //  If we are in middle of sending a reply, we cannot receive next request.
@@ -85,7 +91,7 @@ int zmq::rep_t::xrecv (msg_t *msg_)
             else {
                 //  If the traceback stack is malformed, discard anything
                 //  already sent to pipe (we're at end of invalid message).
-                rc = router_t::rollback ();
+                rc = router_t::xrollback ();
                 errno_assert (rc == 0);
             }
         }

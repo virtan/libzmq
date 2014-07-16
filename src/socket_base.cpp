@@ -838,6 +838,24 @@ int zmq::socket_base_t::send (msg_t *msg_, int flags_)
     return 0;
 }
 
+int zmq::socket_base_t::rollback ()
+{
+    //  Check whether the library haven't been shut down yet.
+    if (unlikely (ctx_terminated)) {
+        errno = ETERM;
+        return -1;
+    }
+
+    //  Try to rollback
+    int rc = xrollback ();
+    if (rc == 0)
+        return 0;
+    if (unlikely (errno != EAGAIN))
+        return -1;
+
+    return 0;
+}
+
 int zmq::socket_base_t::recv (msg_t *msg_, int flags_)
 {
     //  Check whether the library haven't been shut down yet.
@@ -1076,6 +1094,12 @@ bool zmq::socket_base_t::xhas_out ()
 }
 
 int zmq::socket_base_t::xsend (msg_t *)
+{
+    errno = ENOTSUP;
+    return -1;
+}
+
+int zmq::socket_base_t::xrollback ()
 {
     errno = ENOTSUP;
     return -1;

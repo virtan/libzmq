@@ -112,6 +112,11 @@ int zmq::xsub_t::xsend (msg_t *msg_)
     return 0;
 }
 
+int zmq::xsub_t::xrollback ()
+{
+    return 0;
+}
+
 bool zmq::xsub_t::xhas_out ()
 {
     //  Subscription can be added/removed anytime.

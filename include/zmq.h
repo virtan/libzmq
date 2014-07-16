@@ -363,6 +363,7 @@ ZMQ_EXPORT int zmq_send (void *s, const void *buf, size_t len, int flags);
 ZMQ_EXPORT int zmq_send_const (void *s, const void *buf, size_t len, int flags);
 ZMQ_EXPORT int zmq_recv (void *s, void *buf, size_t len, int flags);
 ZMQ_EXPORT int zmq_socket_monitor (void *s, const char *addr, int events);
+ZMQ_EXPORT int zmq_rollback (void *s);
 
 
 /******************************************************************************/
